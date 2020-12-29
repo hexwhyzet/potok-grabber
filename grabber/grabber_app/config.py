@@ -2,8 +2,8 @@ import json
 import os
 
 CONFIG_PY_PATH = os.path.dirname(os.path.realpath(__file__))
-CONFIG = CONFIG_PY_PATH + "../../../configs/config.json"
-SECRETS = CONFIG_PY_PATH + "../../../configs/secrets.json"
+CONFIG = CONFIG_PY_PATH + "/../../configs/config.json"
+SECRETS = CONFIG_PY_PATH + "/../../configs/secrets.json"
 
 
 class Secrets:

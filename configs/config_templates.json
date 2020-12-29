@@ -1,7 +1,7 @@
 {
   "main_server_url": "",
+  "main_server_ip": "",
   "vk_url": "",
   "vk_api_version": "",
-  "page_ids": [
-  ]
+  "chunk_size": 0
 }
