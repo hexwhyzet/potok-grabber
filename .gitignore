@@ -1,0 +1,4 @@
+/configs/config.json
+/configs/secrets.json
+/potok/db.sqlite3
+/potok/media
