@@ -28,8 +28,8 @@ def send_archive_to_server(archive, method):
     return result
 
 
-def send_pictures():
-    pictures_objects = extract_pictures()
+def send_pictures(exported=False):
+    pictures_objects = extract_pictures(exported=exported)
     pictures = list(map(model_to_dict, pictures_objects))
     for chunk_archive in split_in_chunks(pictures):
         try:

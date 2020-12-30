@@ -64,3 +64,7 @@ def mark_as_exported(pictures):
     for picture in pictures:
         picture.exported = True
         picture.save()
+
+
+def mark_all_as_exported():
+    Picture.objects.filter(exported=False).update(exported=True)
