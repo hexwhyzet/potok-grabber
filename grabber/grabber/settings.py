@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
-from grabber_app.config import Secrets
 from grabber_app.config import Config
+from grabber_app.config import Secrets
 
 config = Config()
 secrets = Secrets()

@@ -1,6 +1,8 @@
-import telebot
-from .config import Secrets
 import datetime
+
+import telebot
+
+from .config import Secrets
 
 secrets = Secrets()
 bot = telebot.TeleBot(secrets["tg_token"])

@@ -1,5 +1,7 @@
+from json import loads
+
 import requests
-from json import loads, dumps
+
 from .config import Secrets, Config
 
 secrets = Secrets()
