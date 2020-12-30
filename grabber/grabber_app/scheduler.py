@@ -2,18 +2,22 @@ import time
 
 import schedule
 
-from .config import Secrets, Config
+from grabber_app.config import Secrets, Config
 from grabber_app.sender import send_pictures, send_profiles
-from .interface import grab_all_pictures_and_profiles
+from grabber_vk.interface import grab_pictures, grab_profiles
+
+from grabber_app.notification import send_message
 
 secret = Secrets()
 config = Config()
 
 
 def job():
-    grab_all_pictures_and_profiles()
+    grab_profiles()
+    grab_pictures()
     send_profiles()
     send_pictures()
+    send_message("Работа выполнена")
 
 
 def scheduler():

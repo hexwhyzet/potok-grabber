@@ -8,15 +8,20 @@ from .service import all_profile_ids, add_profiles_source_id, add_profiles_sourc
 MAX_NUMBER = 100
 
 
-def grab_all_pictures_and_profiles():
+def grab_both():
     for profile_id in all_profile_ids():
         grab_profile_via_api_from(profile_id)
         grab_pictures_via_api_from(profile_id, MAX_NUMBER)
 
 
-def grab_pictures(request):
-    grab_all_pictures_and_profiles()
-    return JsonResponse({"success": True})
+def grab_profiles():
+    for profile_id in all_profile_ids():
+        grab_profile_via_api_from(profile_id)
+
+
+def grab_pictures():
+    for profile_id in all_profile_ids():
+        grab_pictures_via_api_from(profile_id, MAX_NUMBER)
 
 
 def load_source_ids(request):

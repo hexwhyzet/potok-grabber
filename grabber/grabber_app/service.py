@@ -1,4 +1,4 @@
-from .models import Picture, Profile
+from grabber_app.models import Picture, Profile
 
 
 def add_pictures_from_dict(pictures_dict, source):

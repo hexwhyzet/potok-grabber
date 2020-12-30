@@ -3,7 +3,7 @@ from json import dumps
 import requests
 from django.forms import model_to_dict
 
-from .config import Secrets, Config
+from grabber_app.config import Secrets, Config
 from grabber_app.functions import chunks
 from grabber_app.service import extract_pictures, extract_profiles
 

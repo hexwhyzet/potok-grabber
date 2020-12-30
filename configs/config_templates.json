@@ -1,6 +1,8 @@
 {
   "main_server_url": "",
   "main_server_ip": "",
+  "grabber_server_url": "",
+  "grabber_server_ip": "",
   "vk_url": "",
   "vk_api_version": "",
   "chunk_size": 0
