@@ -16,9 +16,15 @@ def job():
     grab_profiles()
     grab_pictures()
     send_profiles()
-    send_pictures(exported=False)
+    send_pictures()
     mark_all_as_exported()
     send_message("Работа выполнена")
+
+
+def force_send():
+    send_profiles()
+    send_pictures(exported=True)
+    send_pictures(exported=False)
 
 
 def scheduler():
