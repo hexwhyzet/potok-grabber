@@ -4,7 +4,7 @@ from grabber_app.config import Secrets, Config
 from grabber_app.notification import send_message
 from grabber_app.sender import send_profile, send_pictures
 from grabber_app.service import get_profiles_that_need_to_be_updated, extract_pictures, \
-    mark_as_exported
+    mark_as_exported, change_last_update_date_to_now
 from grabber_vk.interface import grab_profile, grab_pictures
 
 secret = Secrets()
@@ -18,6 +18,7 @@ def job():
         grab_profile(profile.source_profile_id)
         grab_pictures(profile.source_profile_id)
         send_profile(profile)
+        change_last_update_date_to_now(profile)
         unexported_pictures = extract_pictures(profile)
         send_pictures(unexported_pictures)
         mark_as_exported(unexported_pictures)

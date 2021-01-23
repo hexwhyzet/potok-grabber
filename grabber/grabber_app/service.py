@@ -80,6 +80,11 @@ def mark_as_exported(pictures):
         picture.save()
 
 
+def change_last_update_date_to_now(profile):
+    profile.last_update_date = timezone.now()
+    profile.save()
+
+
 def mark_all_as_exported():
     Picture.objects.filter(exported=False).update(exported=True)
 
