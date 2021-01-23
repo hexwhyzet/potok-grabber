@@ -17,4 +17,5 @@ class Profile(models.Model):
     screen_name = models.CharField(max_length=100)
     avatar_url = models.CharField(max_length=1000)
     avatar_size = models.IntegerField()
+    last_update_date = models.DateTimeField(null=True, blank=True)
     source = models.CharField(max_length=100)

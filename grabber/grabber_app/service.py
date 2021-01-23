@@ -1,4 +1,13 @@
+from datetime import datetime, timedelta
+from random import randint
+
+from django.utils import timezone
+
+from grabber_app.config import Secrets, Config
 from grabber_app.models import Picture, Profile
+
+secret = Secrets()
+config = Config()
 
 
 def add_pictures_from_dict(pictures_dict, source):
@@ -50,8 +59,13 @@ def add_profile_from_dict(profile_dict, source):
         )
 
 
-def extract_pictures(exported=False):
+def extract_all_pictures(exported=False):
     pictures = Picture.objects.filter(exported=exported)
+    return pictures
+
+
+def extract_pictures(profile: Profile):
+    pictures = Picture.objects.filter(exported=False, source_profile_id=profile.source_profile_id)
     return pictures
 
 
@@ -68,3 +82,21 @@ def mark_as_exported(pictures):
 
 def mark_all_as_exported():
     Picture.objects.filter(exported=False).update(exported=True)
+
+
+def set_random_last_update_time():
+    import_interval = config["import_interval_seconds"]
+    profiles = Profile.objects.all()
+    for profile in profiles:
+        profile.last_update_date = timezone.now() - timedelta(seconds=randint(0, import_interval))
+        profile.save()
+
+
+def get_profiles_that_need_to_be_updated():
+    import_interval = config["import_interval_seconds"]
+    threshold_date = timezone.now() - timedelta(seconds=import_interval)
+    profiles = Profile.objects.filter(last_update_date__lt=threshold_date)
+    return profiles
+
+
+

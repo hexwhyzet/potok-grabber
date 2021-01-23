@@ -20,8 +20,12 @@ def filter_list_of_posts(list_of_posts):
         photos = list(filter(lambda x: x["type"] == "photo", post["attachments"]))
         return len(photos) == 1
 
+    def does_post_has_short_text(post):
+        return len(post["text"]) < 150
+
     filtered_list_of_posts = filter(is_post_not_add, list_of_posts)
     filtered_list_of_posts = filter(does_post_contain_only_one_photo, filtered_list_of_posts)
+    filtered_list_of_posts = filter(does_post_has_short_text, filtered_list_of_posts)
     return list(filtered_list_of_posts)
 
 

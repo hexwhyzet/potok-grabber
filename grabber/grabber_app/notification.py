@@ -1,6 +1,7 @@
 import datetime
 
 import telebot
+from django.utils import timezone
 
 from .config import Secrets
 
@@ -36,7 +37,7 @@ def send_welcome(message):
 
 @bot.message_handler(func=lambda message: message.chat.id == chat_id, commands=["session"])
 def send_welcome(message):
-    delta = datetime.datetime.now() - boot_datetime
+    delta = timezone.now() - boot_datetime
     text = f"Бот работает с {datetime.datetime.strftime(boot_datetime, '%H:%M %d/%m/%y')}\n" \
            f"На протяжении {pretty_time_delta(delta.total_seconds())}"
     send_message(text)

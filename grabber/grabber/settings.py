@@ -30,7 +30,7 @@ SECRET_KEY = secrets["django_secret_key"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [config["grabber_server_ip"]]
+ALLOWED_HOSTS = [config["grabber_server_ip"], "127.0.0.1"]
 
 # Application definition
 
