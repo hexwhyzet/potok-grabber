@@ -10,13 +10,14 @@ from grabber_vk.interface import grab_profile, grab_pictures
 secret = Secrets()
 config = Config()
 
+SCHEDULER_STARTER = False
 
 def job():
     profiles = get_profiles_that_need_to_be_updated()
 
     for profile in profiles:
-        grab_profile(profile)
-        grab_pictures(profile)
+        grab_profile(profile.source_profile_id)
+        grab_pictures(profile.source_profile_id)
         send_profile(profile)
         unexported_pictures = extract_pictures(profile)
         send_pictures(unexported_pictures)
@@ -25,10 +26,13 @@ def job():
 
 
 def start_scheduler():
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(job, 'interval', minutes=1)
-    scheduler.start()
-    print("Scheduler started working in background!")
+    global SCHEDULER_STARTER
+    if not SCHEDULER_STARTER:
+        SCHEDULER_STARTER = 1 - SCHEDULER_STARTER
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(job, 'interval', minutes=1)
+        scheduler.start()
+        print("Scheduler started working in background!")
 
 
 if __name__ == '__main__':

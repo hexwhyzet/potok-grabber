@@ -19,10 +19,8 @@ def vk_api_request(method, params=None):
     params["v"] = API_VERSION
     response = requests.get(f"{VK_URL}/method/{method}", params).text
     json = loads(response)
-    if "response" in json:
-        return json["response"]
-    else:
-        return None
+    return json["response"]
+
 
 
 def get_posts(owner_id, count):

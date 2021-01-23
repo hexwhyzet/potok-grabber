@@ -36,7 +36,7 @@ def send_all_pictures(exported=False):
 
 def send_all_profiles():
     profile_objects = extract_profiles()
-    profiles = list(map(model_to_dict, profile_objects))
+    profiles = [model_to_dict(profile, exclude=["last_update_date"]) for profile in profile_objects]
     for chunk_archive in split_in_chunks(profiles):
         try:
             send_archive_to_server(chunk_archive, "send_profiles")
@@ -54,9 +54,9 @@ def send_pictures(pictures):
 
 
 def send_profile(profile: Profile):
-    profile_dict = model_to_dict(profile)
+    profile_dict = model_to_dict(profile, exclude=["last_update_date"])
     try:
-        send_archive_to_server(create_archive(profile_dict), "send_profiles")
+        send_archive_to_server(create_archive([profile_dict]), "send_profiles")
     except Exception as e:
         print(e)
 
