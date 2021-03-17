@@ -23,9 +23,27 @@ def filter_list_of_posts(list_of_posts):
     def does_post_has_short_text(post):
         return len(post["text"]) < 150
 
+    def does_not_text_include_link(post):
+        triggers = [
+            "www",
+            "http",
+            "https",
+            "vk.com",
+            "vk.me",
+            "tg",
+            "www",
+            ".com",
+            ".ru",
+        ]
+        for trigger in triggers:
+            if trigger in post["text"]:
+                return False
+        return True
+
     filtered_list_of_posts = filter(is_post_not_add, list_of_posts)
     filtered_list_of_posts = filter(does_post_contain_only_one_photo, filtered_list_of_posts)
     filtered_list_of_posts = filter(does_post_has_short_text, filtered_list_of_posts)
+    filtered_list_of_posts = filter(does_not_text_include_link, filtered_list_of_posts)
     return list(filtered_list_of_posts)
 
 
