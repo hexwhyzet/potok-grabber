@@ -20,7 +20,7 @@ def filter_list_of_posts(list_of_posts):
         photos = list(filter(lambda x: x["type"] == "photo", post["attachments"]))
         return len(photos) == 1
 
-    def does_post_has_short_text(post):
+    def does_post_have_short_text(post):
         return len(post["text"]) < 150
 
     def does_not_text_include_link(post):
@@ -40,10 +40,14 @@ def filter_list_of_posts(list_of_posts):
                 return False
         return True
 
+    def does_post_not_have_copyright(post):
+        return "copyright" not in post
+
     filtered_list_of_posts = filter(is_post_not_add, list_of_posts)
     filtered_list_of_posts = filter(does_post_contain_only_one_photo, filtered_list_of_posts)
-    filtered_list_of_posts = filter(does_post_has_short_text, filtered_list_of_posts)
+    filtered_list_of_posts = filter(does_post_have_short_text, filtered_list_of_posts)
     filtered_list_of_posts = filter(does_not_text_include_link, filtered_list_of_posts)
+    filtered_list_of_posts = filter(does_post_not_have_copyright, filtered_list_of_posts)
     return list(filtered_list_of_posts)
 
 
