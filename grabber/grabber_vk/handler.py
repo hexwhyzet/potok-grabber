@@ -46,13 +46,13 @@ def filter_list_of_posts(list_of_posts):
     def does_post_not_have_api_source(post):
         return post["post_source"]["type"] != "api"
 
-    filtered_list_of_posts = filter(is_post_not_add, list_of_posts)
-    filtered_list_of_posts = filter(does_post_contain_only_one_photo, filtered_list_of_posts)
-    filtered_list_of_posts = filter(does_post_have_short_text, filtered_list_of_posts)
-    filtered_list_of_posts = filter(does_not_text_include_link, filtered_list_of_posts)
-    filtered_list_of_posts = filter(does_post_not_have_copyright, filtered_list_of_posts)
-    filtered_list_of_posts = filter(does_post_not_have_api_source, filtered_list_of_posts)
-    return list(filtered_list_of_posts)
+    filters = [is_post_not_add, does_post_contain_only_one_photo, does_post_have_short_text, does_not_text_include_link,
+               does_post_not_have_copyright, does_post_not_have_api_source]
+
+    for filter_func in filters:
+        list_of_posts = list(filter(filter_func, list_of_posts))
+
+    return list(list_of_posts)
 
 
 def extract_photo_url_and_size(photos_dict):
@@ -117,5 +117,4 @@ def grab_profile_via_api_from(source_id):
 
 
 if __name__ == '__main__':
-    print(profile_id_by_source_name("yungbidlo"))
     pass
