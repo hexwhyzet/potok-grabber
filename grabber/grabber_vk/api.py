@@ -2,7 +2,7 @@ from json import loads
 
 import requests
 
-from config import Secrets, Config
+from .config import Secrets, Config
 
 secrets = Secrets()
 config = Config()
