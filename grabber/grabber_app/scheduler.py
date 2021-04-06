@@ -17,12 +17,20 @@ def job():
     for profile in profiles:
         grab_profile(profile.source_profile_id)
         grab_pictures(profile.source_profile_id)
-        send_profile(profile)
-        change_last_update_date_to_now(profile)
+
+        try:
+            send_profile(profile)
+            change_last_update_date_to_now(profile)
+        except Exception as e:
+            print(f"Profile send filed {e}")
+
         unexported_pictures = extract_pictures(profile)
-        send_pictures(unexported_pictures)
-        mark_as_exported(unexported_pictures)
-        send_message(f"{profile.name}: {len(unexported_pictures)} картинок выгружено")
+        try:
+            send_pictures(unexported_pictures)
+            mark_as_exported(unexported_pictures)
+            send_message(f"{profile.name}: {len(unexported_pictures)} картинок выгружено")
+        except Exception as e:
+            print(f"Pictures send failed {e}")
 
 
 def start_scheduler():

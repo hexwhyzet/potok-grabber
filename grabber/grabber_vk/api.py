@@ -2,7 +2,7 @@ from json import loads
 
 import requests
 
-from .config import Secrets, Config
+from config import Secrets, Config
 
 secrets = Secrets()
 config = Config()
@@ -36,7 +36,7 @@ def get_group_by_id(group_id):
 if __name__ == '__main__':
     pass
 
-    # text = get_posts(102013506, 100)
-    # print(text)
+    text = get_posts(187042498, 100)
+    print(text)
     # with open("example_posts.json", "w", encoding="utf8") as file:
     #     file.write(text)
