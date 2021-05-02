@@ -5,6 +5,7 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'grabber.settings')
 django.setup()
 
-from grabber_app.models import Picture
+from grabber_app.models import Picture, Profile
 
-Picture.objects.all().update(exported=False)
+Picture.objects.filter(source_profile_id=149594529).delete()
+Profile.objects.filter(source_profile_id=149594529).delete()

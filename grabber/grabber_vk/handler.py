@@ -43,11 +43,16 @@ def filter_list_of_posts(list_of_posts):
     def does_post_not_have_copyright(post):
         return "copyright" not in post
 
-    def does_post_not_have_api_source(post):
-        return post["post_source"]["type"] != "api"
+    # def does_post_not_have_api_source(post):
+    #     return post["post_source"]["type"] != "api"
 
-    filters = [is_post_not_add, does_post_contain_only_one_photo, does_post_have_short_text, does_not_text_include_link,
-               does_post_not_have_copyright, does_post_not_have_api_source]
+    filters = [
+        is_post_not_add,
+        does_post_contain_only_one_photo,
+        does_post_have_short_text,
+        does_not_text_include_link,
+        does_post_not_have_copyright,
+    ]
 
     for filter_func in filters:
         list_of_posts = list(filter(filter_func, list_of_posts))
