@@ -1,29 +1,25 @@
 from django.http import JsonResponse
 
 from grabber_app.models import Profile
-from .handler import grab_pictures_via_api_from, grab_profile_via_api_from
-from .service import add_profiles_source_id, add_profiles_source_name, all_profile_ids
+from .handler import grab_pictures_via_api, grab_profile_via_api
+from .models import VkProfile
+from .service import add_profiles_source_id, add_profiles_source_name
 
 MAX_NUMBER = 100
 
 
-def upload_new_vk_profile_to_main_db():
-    for vk_profile_id in all_profile_ids():
-        if not Profile.objects.filter(source_profile_id=vk_profile_id).exists():
-            grab_profile(vk_profile_id)
-
-
-def grab_all_profiles():
-    for profile_id in all_profile_ids():
-        grab_profile_via_api_from(profile_id)
+def unexported_to_main_db_profiles_dicts():
+    unexported_to_main_db_vk_profiles = VkProfile.objects.exclude(
+        source_id__in=Profile.objects.values_list("source_profile_id", flat=True).all())
+    return list(map(lambda _vk_profile: grab_profile(_vk_profile.source_id), unexported_to_main_db_vk_profiles))
 
 
 def grab_profile(profile_id):
-    grab_profile_via_api_from(profile_id)
+    return grab_profile_via_api(profile_id)
 
 
 def grab_pictures(profile_id):
-    grab_pictures_via_api_from(profile_id, MAX_NUMBER)
+    return grab_pictures_via_api(profile_id, MAX_NUMBER)
 
 
 def load_source_ids(request):

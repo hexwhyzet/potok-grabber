@@ -1,13 +1,14 @@
 import re
 
-from grabber_app.service import add_pictures_from_dict, add_profile_from_dict
 from grabber_vk.api import get_posts, get_group_by_id
-from grabber_vk.config import Secrets, Config
+
+if __name__ == '__main__':
+    from grabber_reddit.config import Secrets, Config
+else:
+    from grabber_reddit.config import Secrets, Config
 
 config = Config()
 secrets = Secrets()
-
-SOURCE_TAG = "vk"
 
 
 def filter_list_of_posts(list_of_posts):
@@ -110,16 +111,18 @@ def profile_id_by_source_name(group_id):
     return get_group_by_id(group_id)['id']
 
 
-def grab_pictures_via_api_from(source_id, count):
+def grab_pictures_via_api(source_id, count):
     posts = get_posts(source_id, count)
     pictures = handle_posts(posts)
-    add_pictures_from_dict(pictures, SOURCE_TAG)
+    return pictures
 
 
-def grab_profile_via_api_from(source_id):
+def grab_profile_via_api(source_id):
     profile = extract_profile(get_group_by_id(source_id))
-    add_profile_from_dict(profile, SOURCE_TAG)
+    return profile
 
 
 if __name__ == '__main__':
+    # pictures = grab_pictures_via_api_from(profile_id_by_source_name("yungbidlo"), 100)
+    # print(pictures)
     pass

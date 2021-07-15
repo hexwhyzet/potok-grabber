@@ -2,7 +2,10 @@ from json import loads
 
 import requests
 
-from .config import Secrets, Config
+if __name__ == '__main__':
+    from config import Secrets, Config
+else:
+    from grabber_reddit.config import Secrets, Config
 
 secrets = Secrets()
 config = Config()
@@ -19,8 +22,10 @@ def vk_api_request(method, params=None):
     params["v"] = API_VERSION
     response = requests.get(f"{VK_URL}/method/{method}", params).text
     json = loads(response)
-    return json["response"]
-
+    try:
+        return json["response"]
+    except:
+        print(json)
 
 
 def get_posts(owner_id, count):
@@ -34,9 +39,4 @@ def get_group_by_id(group_id):
 
 
 if __name__ == '__main__':
-    pass
-
     text = get_posts(187042498, 100)
-    print(text)
-    # with open("example_posts.json", "w", encoding="utf8") as file:
-    #     file.write(text)

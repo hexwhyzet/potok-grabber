@@ -1,4 +1,6 @@
 /configs/config.json
 /configs/secrets.json
-/potok/db.sqlite3
-/potok/media
+/grabber/db.sqlite3
+/grabber/grabber_app/migrations
+/grabber/grabber_vk/migrations
+/grabber/grabber_reddit/migrations

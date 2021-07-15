@@ -1,12 +1,12 @@
 from json import dumps
 
 import requests
-from django.forms import model_to_dict
 
 from grabber_app.config import Secrets, Config
 from grabber_app.functions import chunks
 from grabber_app.models import Profile
-from grabber_app.service import extract_all_pictures, extract_profiles
+from grabber_app.service import extract_all_pictures, extract_profiles, profile_to_dict, picture_to_dict, \
+    mark_as_exported
 
 config = Config()
 secrets = Secrets()
@@ -36,7 +36,7 @@ def send_all_pictures(exported=False):
 
 def send_all_profiles():
     profile_objects = extract_profiles()
-    profiles = [model_to_dict(profile, exclude=["last_update_date"]) for profile in profile_objects]
+    profiles = list(map(profile_to_dict, profile_objects))
     for chunk_archive in split_in_chunks(profiles):
         try:
             send_archive_to_server(chunk_archive, "send_profiles")
@@ -45,16 +45,18 @@ def send_all_profiles():
 
 
 def send_pictures(pictures):
-    pictures_dicts = list(map(model_to_dict, pictures))
+    pictures_dicts = list(map(picture_to_dict, pictures))
     for chunk_archive in split_in_chunks(pictures_dicts):
         try:
             send_archive_to_server(chunk_archive, "send_pictures")
         except Exception as e:
             print(e)
+            return
+    mark_as_exported(pictures)
 
 
 def send_profile(profile: Profile):
-    profile_dict = model_to_dict(profile, exclude=["last_update_date"])
+    profile_dict = profile_to_dict(profile)
     try:
         send_archive_to_server(create_archive([profile_dict]), "send_profiles")
     except Exception as e:

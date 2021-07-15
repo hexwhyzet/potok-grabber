@@ -22,5 +22,3 @@ class Config:
 
     def __getitem__(self, item):
         return self.res[item]
-
-

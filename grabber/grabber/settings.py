@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'grabber_app.apps.GrabberAppConfig',
     'grabber_vk.apps.GrabberVkConfig',
+    'grabber_reddit.apps.GrabberRedditConfig'
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
