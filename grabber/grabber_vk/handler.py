@@ -1,5 +1,3 @@
-import re
-
 from grabber_vk.api import get_posts, get_group_by_id
 
 if __name__ == '__main__':
@@ -61,27 +59,21 @@ def filter_list_of_posts(list_of_posts):
     return list(list_of_posts)
 
 
-def extract_photo_url_and_size(photos_dict):
-    if "photo_1280" in photos_dict:
-        photo_url = photos_dict["photo_1280"]
-        size = "1280"
-    else:
-        available_photo_sizes = [i for i in photos_dict if re.search(r"photo_\d*", i)]
-        sorted_available_photo_sizes = list(sorted(available_photo_sizes, key=lambda x: int(x[6:]), reverse=True))
-        photo_url = photos_dict[sorted_available_photo_sizes[0]]
-        size = sorted_available_photo_sizes[0][6:]
-    return photo_url, size
+def extract_photo_url(photos_dict):
+    available_photo_sizes = photos_dict['sizes']
+    sorted_available_photo_widths = list(sorted(available_photo_sizes, key=lambda x: int(x['width']), reverse=True))
+    photo_url = sorted_available_photo_widths[0]['url']
+    return photo_url
 
 
 def extract_pictures_from_post(list_of_posts):
     def extract_picture(post):
-        photo_url, size = extract_photo_url_and_size(post["attachments"][0]["photo"])
+        photo_url = extract_photo_url(post["attachments"][0]["photo"])
         picture = {
             "source_profile_id": abs(int(post["owner_id"])),
             "source_picture_id": post["id"],
             "date": post["date"],
             "url": photo_url,
-            "size": size,
         }
         return picture
 
@@ -90,13 +82,12 @@ def extract_pictures_from_post(list_of_posts):
 
 
 def extract_profile(page_info):
-    photo_url, size = extract_photo_url_and_size(page_info)
+    photo_url = extract_photo_url(page_info)
     stripped_page_info = {
         "source_profile_id": abs(int(page_info["id"])),
         "name": page_info["name"],
         "screen_name": page_info["screen_name"],
         "avatar_url": photo_url,
-        "avatar_size": size,
     }
     return stripped_page_info
 
@@ -111,13 +102,13 @@ def profile_id_by_source_name(group_id):
     return get_group_by_id(group_id)['id']
 
 
-def grab_pictures_via_api(source_id, count):
+def grab_vk_pictures(source_id, count):
     posts = get_posts(source_id, count)
     pictures = handle_posts(posts)
     return pictures
 
 
-def grab_profile_via_api(source_id):
+def grab_vk_profile(source_id):
     profile = extract_profile(get_group_by_id(source_id))
     return profile
 

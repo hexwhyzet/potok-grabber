@@ -5,5 +5,7 @@
   "grabber_server_ip": "",
   "vk_url": "",
   "vk_api_version": "",
+  "reddit_client_id": "",
+  "reddit_username": "",
   "chunk_size": 0
 }

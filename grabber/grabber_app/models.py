@@ -12,7 +12,6 @@ class Profile(models.Model):
     screen_name = models.CharField(max_length=100)
     avatar_url = models.CharField(max_length=1000)
     avatar_size = models.IntegerField(null=True, blank=True)
-    last_update_date = models.DateTimeField(null=True, blank=True)
     source = models.CharField(max_length=100, choices=Source.choices)
 
     def __str__(self):

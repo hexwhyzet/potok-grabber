@@ -1,7 +1,9 @@
 from django.db import models
 
+from grabber_app.base_model import BaseModel
 
-class VkProfile(models.Model):
+
+class VkProfile(BaseModel):
     name = models.CharField(null=True, blank=True, max_length=100)
     screen_name = models.CharField(null=True, blank=True, max_length=100)
     source_id = models.IntegerField(blank=False, null=False)
@@ -12,4 +14,4 @@ class VkProfile(models.Model):
         if self.screen_name is not None:
             return self.screen_name
         else:
-            return self.source_id
+            return str(self.source_id)

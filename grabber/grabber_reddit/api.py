@@ -10,6 +10,8 @@ config = Config()
 
 CLIENT_ID = config["reddit_client_id"]
 SECRET_KEY = secrets["reddit_secret_key"]
+REDDIT_USERNAME = config["reddit_username"]
+REDDIT_PASSWORD = secrets["reddit_password"]
 ACCESS_TOKEN = secrets["reddit_access_token"]
 USER_AGENT = "MyAPI/0.0.1"
 
@@ -18,8 +20,8 @@ def get_access_token():
     auth = requests.auth.HTTPBasicAuth(CLIENT_ID, SECRET_KEY)
     data = {
         'grant_type': 'password',
-        'username': 'potokdevelopers',
-        'password': 'xY85dZQA5cF6kU5huWbp',
+        'username': REDDIT_USERNAME,
+        'password': REDDIT_PASSWORD,
     }
     headers = {'User-Agent': USER_AGENT}
     token = requests.post('https://www.reddit.com/api/v1/access_token',

@@ -6,18 +6,6 @@ from grabber_app import sender
 from grabber_app.models import Picture, Profile
 
 
-@admin.action(description='Download profiles from source server')
-def download_profiles(modeladmin, request, queryset):
-    for profile in queryset:
-        service.download_profile_from_source_server(profile)
-
-
-@admin.action(description='Download pictures from source server')
-def download_pictures(modeladmin, request, queryset):
-    for profile in queryset:
-        service.download_pictures_from_source_server(profile)
-
-
 @admin.action(description='Send profiles to main server')
 def send_profiles(modeladmin, request, queryset):
     for profile in queryset:
@@ -42,7 +30,7 @@ def mark_as_unexported(modeladmin, request, queryset):
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ("name", "screen_name", "source_tag", "source_profile_id", "unexported", "exported")
-    actions = [download_profiles, download_pictures, send_profiles, send_pictures, mark_as_unexported]
+    actions = [send_profiles, send_pictures, mark_as_unexported]
 
     @staticmethod
     def source_tag(profile: Profile):
@@ -75,4 +63,4 @@ class PictureAdmin(admin.ModelAdmin):
     @staticmethod
     def image_tag(picture: Picture):
         return format_html(
-            f"<img src='{picture.url}' width='250' height='250'/>")
+            f"<img src='{picture.url}' width='200' height='200'/>")

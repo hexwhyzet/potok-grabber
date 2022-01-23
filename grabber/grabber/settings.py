@@ -18,6 +18,10 @@ from grabber_app.config import Secrets
 config = Config()
 secrets = Secrets()
 
+enable_main_scheduler = False
+enable_reddit_scheduler = False
+enable_vk_scheduler = False
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
