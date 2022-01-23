@@ -11,7 +11,6 @@ class Profile(models.Model):
     name = models.CharField(max_length=100)
     screen_name = models.CharField(max_length=100)
     avatar_url = models.CharField(max_length=1000)
-    avatar_size = models.IntegerField(null=True, blank=True)
     source = models.CharField(max_length=100, choices=Source.choices)
 
     def __str__(self):
@@ -24,4 +23,3 @@ class Picture(models.Model):
     url = models.CharField(max_length=1000, default=None, null=True, blank=True)
     date = models.IntegerField()
     exported = models.BooleanField(default=False)
-    size = models.IntegerField(null=True, blank=True)
