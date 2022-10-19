@@ -49,8 +49,9 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Picture)
 class PictureAdmin(admin.ModelAdmin):
-    list_display = ("id", "profile_name", "profile_screen_name", "image_tag")
+    list_display = ("id", "date", "profile_name", "profile_screen_name", "image_tag")
     actions = [send_pictures]
+    ordering = ('-date',)
 
     @staticmethod
     def profile_name(picture: Picture):

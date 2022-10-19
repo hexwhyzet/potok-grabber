@@ -34,9 +34,10 @@ def get_posts(owner_id, count):
 
 
 def get_group_by_id(group_id):
-    params = {"group_id": group_id}
+    params = {"group_id": group_id, "fields": ["photo_max_orig"]}
     return vk_api_request("groups.getById", params)[0]
 
 
 if __name__ == '__main__':
-    text = get_posts(187042498, 100)
+    text = get_group_by_id(187042498)
+    print(text)

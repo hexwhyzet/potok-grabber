@@ -1,9 +1,5 @@
+from grabber_reddit.config import Secrets, Config
 from grabber_vk.api import get_posts, get_group_by_id
-
-if __name__ == '__main__':
-    from grabber_reddit.config import Secrets, Config
-else:
-    from grabber_reddit.config import Secrets, Config
 
 config = Config()
 secrets = Secrets()
@@ -82,12 +78,11 @@ def extract_pictures_from_post(list_of_posts):
 
 
 def extract_profile(page_info):
-    photo_url = extract_photo_url(page_info)
     stripped_page_info = {
         "source_profile_id": abs(int(page_info["id"])),
         "name": page_info["name"],
         "screen_name": page_info["screen_name"],
-        "avatar_url": photo_url,
+        "avatar_url": page_info["photo_max_orig"],
     }
     return stripped_page_info
 
@@ -114,6 +109,6 @@ def grab_vk_profile(source_id):
 
 
 if __name__ == '__main__':
-    # pictures = grab_pictures_via_api_from(profile_id_by_source_name("yungbidlo"), 100)
-    # print(pictures)
+    # print(profile_id_by_source_name("yungbidlo"))
+    pictures = grab_vk_pictures(profile_id_by_source_name("yungbidlo"), 100)
     pass

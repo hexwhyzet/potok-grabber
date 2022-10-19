@@ -23,7 +23,7 @@ def split_in_chunks(python_obj):
 
 
 def send_archive_to_server(archive, method):
-    url = config["main_server_url"] + "/" + str(method)
+    url = config["main_server_url"] + "/api/" + str(method)
     params = {"archive": archive}
     result = requests.post(url, data=params)
     return result
